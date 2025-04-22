@@ -1,5 +1,5 @@
 import { type Actions, fail } from "@sveltejs/kit";
-import { API_URL } from "$lib/server/constats";
+import { API_URL } from "$lib/server/api";
 
 export const actions = {
     default: async ({ request, cookies, fetch }) => {
