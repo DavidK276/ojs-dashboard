@@ -1,0 +1,118 @@
+@media screen and (max-width: 767px) {
+    .m-w-full {
+        width: 100% !important;
+    }
+
+    .row.m-col {
+        flex-direction: column;
+    }
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col {
+    flex-direction: column;
+}
+
+:is(.row, .col) {
+    display: flex;
+    gap: var(--md);
+
+    &.no-gap {
+        gap: 0;
+    }
+
+    &.ver-top {
+        align-items: start;
+    }
+
+    &.ver-center {
+        align-items: center;
+    }
+
+    &.ver-bottom {
+        align-items: end;
+    }
+
+    &.hor-left {
+        justify-content: start;
+    }
+
+    &.hor-center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.hor-right {
+        justify-content: end;
+    }
+}
+
+.content {
+    max-width: 1280px;
+    width: 100%;
+}
+
+.error-msg {
+    color: var(--danger);
+    margin-top: var(--sm);
+    margin-bottom: var(--lg);
+
+    &:has(+ .auto-error) {
+        margin-bottom: 0;
+    }
+}
+
+.auto-error {
+    & ~ :not(.auto-error):is(.error-msg) {
+        display: none;
+    }
+}
+
+.box {
+    border: 1px solid gray;
+    border-radius: var(--xs);
+    box-shadow: 0 0 4px gray;
+    margin: var(--sm) 0;
+    padding: var(--sm) var(--lg);
+}
+
+.heading {
+    margin-top: var(--md);
+    margin-bottom: var(--md);
+
+    h1, h2 {
+        margin: 0;
+    }
+}
+
+.my-label:has(+ input:user-invalid) {
+    color: var(--danger);
+}
+
+.icon {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+@supports selector(&) and selector(p:has(a)) and selector(input:user-invalid) and (color: light-dark(red, red)) {
+    .unsupported-browser {
+        display: none;
+    }
+}
+
+.unsupported-browser {
+    margin-bottom: 8px;
+    min-height: 2rem;
+    padding: var(--lg);
+    background-color: #833502;
+    color: red;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
+}

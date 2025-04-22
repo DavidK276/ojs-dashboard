@@ -1,0 +1,48 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+@supports (interpolate-size: allow-keywords) {
+    :root {
+        interpolate-size: allow-keywords
+    }
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: calc(1em + 0.5em);
+    -webkit-font-smoothing: antialiased;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+}
+
+p {
+    hyphens: auto;
+}
+
+@supports (text-wrap: pretty) {
+    p {
+        text-wrap: pretty;
+    }
+}
+
+textarea {
+    font: inherit;
+}
+
+#root, #__next {
+    isolation: isolate;
+}

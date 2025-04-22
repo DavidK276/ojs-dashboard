@@ -1,0 +1,11 @@
+:root {
+    color-scheme: light;
+
+    /*&:has(#theme-select option[value="light"]:checked) {*/
+    /*    color-scheme: light;*/
+    /*}*/
+
+    /*&:has(#theme-select option[value="dark"]:checked) {*/
+    /*    color-scheme: dark;*/
+    /*}*/
+}
