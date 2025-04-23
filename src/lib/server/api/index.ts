@@ -1,3 +1,7 @@
 import { env } from "$env/dynamic/private";
 
-export const API_URL = env.OJS_API_URL || "http://localhost:8081/index.php/meicogsci/api/v1/";
+if (!env.OJS_API_URL) {
+	throw new Error('OJS_API_URL is not set');
+}
+
+export const API_URL = env.OJS_API_URL;
