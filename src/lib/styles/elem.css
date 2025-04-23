@@ -78,6 +78,8 @@ footer {
 }
 
 input {
+    border-radius: var(--xs);
+
     &.error, &:user-invalid {
         box-shadow: 0 0 4px var(--danger);
         outline: 1px solid var(--danger);
@@ -100,20 +102,35 @@ input {
     }
 
     &[type="radio"], &[type="checkbox"] {
-        width: initial;
         margin: 0 1em 0 0;
-        box-shadow: darkgray 0 0 2px 0;
+        box-shadow: var(--text-primary) 0 0 2px 0;
+        border-radius: 0.3rem;
+        border: none;
         outline: none;
-        background: revert-layer !important;
+        appearance: none;
+        vertical-align: middle;
+        background: var(--background-primary);
+        width: 1.1rem;
+        height: 1.1rem;
+        cursor: pointer;
     }
 }
 
-input, textarea {
-    width: 100%;
-    border-radius: var(--xs);
-    border: none;
-    padding: var(--xs) var(--sm);
-    box-shadow: 0 0 2px var(--text-primary);
+input[type="checkbox"]:checked {
+    background: var(--button-primary);
+}
+
+input[type="checkbox"]:checked::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z'/%3E%3C/svg%3E");
+}
+
+:not(:is(td, th)) > :is(input, textarea) {
+    &:not([type="radio"], [type="checkbox"]) {
+        width: 100%;
+        border: none;
+        padding: var(--xs) var(--sm);
+        box-shadow: 0 0 2px var(--text-primary);
+    }
 }
 
 select {
