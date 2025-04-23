@@ -11,8 +11,7 @@ export const actions = {
 		const response = await fetch(API_URL + 'users?count=1', {
 			headers: {
 				Authorization: `Bearer ${apiKey}`
-			},
-			redirect: "follow"
+			}
 		});
 		if (response.status !== 200) {
 			console.log('Login failed with status ' + response.status);
