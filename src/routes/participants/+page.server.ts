@@ -2,18 +2,18 @@ import type { PageServerLoad } from "./$types";
 import { groupSettings, reviewAssignments, stageAssignments, users, userSettings } from "$lib/server/db/schema";
 import { db } from "$lib/server/db";
 import {
-    and,
-    asc,
-    type Column,
-    desc,
-    eq,
-    getTableColumns,
-    inArray,
-    isNull,
-    like,
-    or,
-    type SQL,
-    sql
+	and,
+	asc,
+	type Column,
+	desc,
+	eq,
+	getTableColumns,
+	inArray,
+	isNull,
+	like,
+	not,
+	type SQL,
+	sql
 } from "drizzle-orm";
 import { type Actions, fail } from "@sveltejs/kit"
 import { stringify } from 'csv-stringify/sync';
@@ -106,8 +106,8 @@ function parseSearchParams(searchParams: URLSearchParams) {
 		filters.push(likeOrNull(affiliations.affiliation, affiliationFilter));
 	}
 	if (searchParams.get("_spValidAf") === '1') {
-		const validAfFilters = VALID_UNIVERSITY_LIST.map(af => eq(affiliations.affiliation, af));
-		filters.push(or(...validAfFilters));
+		const validAfFilters = VALID_UNIVERSITY_LIST.map(af => not(eq(affiliations.affiliation, af)));
+		filters.push(and(...validAfFilters));
 	}
 
 	const emailFilter = searchParams.get("email");
@@ -115,8 +115,8 @@ function parseSearchParams(searchParams: URLSearchParams) {
 		filters.push(likeOrNull(users.email, emailFilter));
 	}
 	if (searchParams.get("_spValidEmail") === '1') {
-		const validEmailFilters = VALID_EMAIL_DOMAINS.map(emailDomain => like(users.email, '%' + emailDomain));
-		filters.push(or(...validEmailFilters));
+		const validEmailFilters = VALID_EMAIL_DOMAINS.map(emailDomain => not(like(users.email, '%' + emailDomain)));
+		filters.push(and(...validEmailFilters));
 	}
 
 	const countryFilter = searchParams.get("country");
