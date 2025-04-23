@@ -16,9 +16,6 @@ export const actions = {
 		});
 		if (response.status !== 200) {
 			console.log('Login failed with status ' + response.status);
-			if (300 <= response.status && response.status <= 399) {
-				console.log(response.headers.get("location"));
-			}
 			return { success: false }
 		}
 		const expiry = new Date();

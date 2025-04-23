@@ -3,7 +3,7 @@ import { API_URL } from "$lib/server/api";
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const { url, cookies } = event;
-	if (url.pathname.startsWith('/login')) {
+	if (url.pathname.startsWith('/login') || url.pathname.startsWith(new URL(API_URL).pathname)) {
 		return resolve(event);
 	}
 	const apiKey = cookies.get('ApiKey');
