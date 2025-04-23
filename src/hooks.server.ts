@@ -8,7 +8,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
     const apiKey = cookies.get('ApiKey');
     if (apiKey == null) {
-        redirect(301, '/login');
+        redirect(302, '/login');
     }
     const response = await fetch(API_URL + 'users?count=1', {
         headers: {
@@ -16,7 +16,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
     });
     if (response.status !== 200) {
-        redirect(301, '/login');
+        redirect(302, '/login');
     }
 
     return resolve(event);
