@@ -8,7 +8,7 @@ export type CsvRow = {
     issues: string;
 };
 
-const VALID_UNIVERSITY_LIST = [
+export const VALID_UNIVERSITY_LIST = [
     'University of Ljubljana',
     'Comenius University Bratislava',
     'Comenius University in Bratislava',
@@ -16,7 +16,7 @@ const VALID_UNIVERSITY_LIST = [
     'Eötvös Loránd University'
 ];
 
-const VALID_EMAIL_DOMAINS = [
+export const VALID_EMAIL_DOMAINS = [
     'uni-lj.si',
     'uniba.sk',
     'univie.ac.at',
