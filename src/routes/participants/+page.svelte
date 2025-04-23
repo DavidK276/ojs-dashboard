@@ -284,7 +284,7 @@
 <div class="col">
     <Datatable basic table={badRecordsTable}>
         {#snippet header()}
-            <div class="col" style="gap: 0">
+            <div class="col" style="gap: 0; width: 100%">
                 <div class="col" style="gap: 0">
                     <h3 class="font-bold text-lg">Checks to perform</h3>
                     <div class="row ver-center">
@@ -304,7 +304,7 @@
                         <input id="missingCountry" type="checkbox" bind:checked={$checkMissingCountry}>
                     </div>
                 </div>
-                <div class="col" style="gap: 0">
+                <div class="col" style="gap: 0; width: 25%">
                     <h3 class="font-bold text-lg">Format of CSV</h3>
                     <div class="row ver-center">
                         <label for="useCsvFirstRow">Get columns from first row of CSV</label>
