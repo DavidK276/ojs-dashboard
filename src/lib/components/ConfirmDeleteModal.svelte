@@ -18,7 +18,8 @@
 	<div onclick={e => e.stopPropagation()} onkeydown={e => e.stopPropagation()}>
 		<h2 class="font-bold text-xl">Confirmation</h2>
 		<hr>
-		<p>You are about to delete {userCount} user{userCount ? 's' : ''}. To confirm, please type the number of users you
+		<p>You are about to delete <strong>{userCount}</strong> user{userCount ? 's' : ''}.<br>To confirm, please type the
+			number of users you
 			are about to delete below.</p>
 		<div class="col">
 			<input bind:value={userInput} type="text">
