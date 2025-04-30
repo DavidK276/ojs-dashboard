@@ -128,19 +128,9 @@ function parseSearchParams(searchParams: URLSearchParams) {
 		filters.push(and(...validEmailFilters));
 	}
 
-	const countryFilter = searchParams.get("country");
-	if (countryFilter != null) {
-		filters.push(likeOrNull(users.country, countryFilter));
-	}
-
 	const registrationFilter = searchParams.get("dateRegistered");
 	if (registrationFilter != null) {
 		filters.push(likeOrNull(users.dateRegistered, registrationFilter));
-	}
-
-	const validationFilter = searchParams.get("dateValidated");
-	if (validationFilter != null) {
-		filters.push(likeOrNull(users.dateValidated, validationFilter));
 	}
 
 	const groupsFilter = searchParams.get("groups");
@@ -212,9 +202,7 @@ export const actions = {
 			familyName: familyNames.familyName,
 			email: users.email,
 			affiliation: affiliations.affiliation,
-			contry: users.country,
 			dateRegistered: sql<string>`(DATE_FORMAT(${users.dateRegistered}, "%e. %c. %Y %k:%i"))`,
-			dateValidated: sql<string>`(DATE_FORMAT(${users.dateValidated}, "%e. %c. %Y %k:%i"))`,
 			dateMostRecentAssignment: sql<string>`(DATE_FORMAT(${mostRecentAssignments.mostRecentAssignment}, "%e. %c. %Y %k:%i"))`,
 		}).from(users)
 				.leftJoin(givenNames, eq(givenNames.userId, users.id))

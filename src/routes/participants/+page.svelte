@@ -48,7 +48,7 @@
 		return data.users;
 	});
 
-	let csvFormat = $state("givenName,familyName,email,affiliation,country,comments");
+	let csvFormat = $state("givenName,familyName,email,affiliation,comments");
 	let useFirstCsvRow = $state(true);
 
 	let goodRows = storable('goodRows', new Array<CsvRow>());
@@ -57,7 +57,7 @@
 		selectBy: 'email'
 	}));
 	const goodRowCount = $derived(goodRecordsTable.rowCount);
-	let goodOutputColumns = storable('goodOutputColumns', 'givenName,familyName,email,affiliation,country,comments');
+	let goodOutputColumns = storable('goodOutputColumns', 'givenName,familyName,email,affiliation,comments');
 
 	let badRows = storable('badRows', new Array<CsvRow>());
 	const badRecordsTable = $derived(new ClientTableHandler($badRows, {
@@ -73,7 +73,6 @@
 	let checkEmailValidDomain = storable('checkEmailValidDomain', false);
 	let checkMissingAffiliation = storable('checkMissingAffiliation', false);
 	let checkAffiliationValid = storable('checkAffiliationValid', false);
-	let checkMissingCountry = storable('checkMissingCountry', false);
 
 	function checkRow(csvRow: CsvRow) {
 		const problems = [];
@@ -94,9 +93,6 @@
 		}
 		else if ($checkAffiliationValid && csvRow.affiliation && !isAffiliationValid(csvRow.affiliation)) {
 			problems.push("Unrecognized affiliation");
-		}
-		if ($checkMissingCountry && !csvRow.country) {
-			problems.push("Missing country");
 		}
 		return { noProblems: problems.length === 0, problems: problems.join(', ') };
 	}
@@ -255,9 +251,7 @@
 			<ThSort field="familyName" {table}>Family Name</ThSort>
 			<ThSort field="email" {table}>Email</ThSort>
 			<ThSort field="affiliation" {table}>Affiliation</ThSort>
-			<ThSort field="country" {table}>Country</ThSort>
 			<ThSort field="dateRegistered" {table}>Date of registration</ThSort>
-			<ThSort field="dateValidated" {table}>Date of validation</ThSort>
 			<ThSort field="dateMostRecentAssignment" {table}>Date of most recent submission</ThSort>
 			<Th>Belongs to groups</Th>
 			<Th>Has previously<br>reviewed</Th>
@@ -269,9 +263,7 @@
 			<ThFilter field="familyName" {table}></ThFilter>
 			<ThFilter field="email" {table}></ThFilter>
 			<ThFilter field="affiliation" {table}></ThFilter>
-			<ThFilter field="country" {table}></ThFilter>
 			<ThFilter field="dateRegistered" {table}></ThFilter>
-			<ThFilter field="dateValidated" {table}></ThFilter>
 			<ThFilter field="dateMostRecentAssignment" {table}></ThFilter>
 			<ThFilter field="groups" {table}></ThFilter>
 			<Th><!-- Delete button column --></Th>
@@ -292,9 +284,7 @@
 				<td>{row.familyName}</td>
 				<td>{row.email}</td>
 				<td>{row.affiliation}</td>
-				<td>{row.country}</td>
 				<td>{row.dateRegistered}</td>
-				<td>{row.dateValidated}</td>
 				<td>{row.dateMostRecentAssignment}</td>
 				<td>{row.groups}</td>
 				<td><input type="checkbox" readonly disabled checked={row.hasReviewAssignment}></td>
@@ -346,8 +336,6 @@
 						<input id="missingAf" type="checkbox" bind:checked={$checkMissingAffiliation}>
 						<label for="invalidAf">Affiliation not recognized</label>
 						<input id="invalidAf" type="checkbox" bind:checked={$checkAffiliationValid}>
-						<label for="missingCountry">Missing country</label>
-						<input id="missingCountry" type="checkbox" bind:checked={$checkMissingCountry}>
 					</div>
 				</div>
 				<div class="col" style="gap: 0; width: 25%">
@@ -380,7 +368,6 @@
 				<ThSort field="familyName" table={badRecordsTable}>Family Name</ThSort>
 				<ThSort field="email" table={badRecordsTable}>Email</ThSort>
 				<ThSort field="affiliation" table={badRecordsTable}>Affiliation</ThSort>
-				<ThSort field="country" table={badRecordsTable}>Country</ThSort>
 				<ThSort field="comments" table={badRecordsTable}>Comments</ThSort>
 				<Th>Issues</Th>
 			</tr>
@@ -390,7 +377,6 @@
 				<ThFilter field="familyName" table={badRecordsTable}></ThFilter>
 				<ThFilter field="email" table={badRecordsTable}></ThFilter>
 				<ThFilter field="affiliation" table={badRecordsTable}></ThFilter>
-				<ThFilter field="country" table={badRecordsTable}></ThFilter>
 				<ThFilter field="comments" table={badRecordsTable}></ThFilter>
 				<Th></Th>
 			</tr>
@@ -409,7 +395,6 @@
 					<td>{row.familyName}</td>
 					<td>{row.email}</td>
 					<td>{row.affiliation}</td>
-					<td>{row.country}</td>
 					<td>{row.comments}</td>
 					<td>{row.issues}</td>
 				</tr>
@@ -424,8 +409,8 @@
 					<input id="outputCsvColumns1" type="text" bind:value={$badOutputColumns}>
 				</div>
 				<button type="button"
-				        class:hidden={$badOutputColumns === 'givenName,familyName,email,affiliation,country,comments,issues'}
-				        onclick={() => $badOutputColumns = 'givenName,familyName,email,affiliation,country,comments,issues'}>
+				        class:hidden={$badOutputColumns === 'givenName,familyName,email,affiliation,comments,issues'}
+				        onclick={() => $badOutputColumns = 'givenName,familyName,email,affiliation,comments,issues'}>
 					Reset
 				</button>
 				<button type="button" style="cursor: pointer" class:hidden={badRecordsTable.rowCount.total === 0}
@@ -460,7 +445,6 @@
 				<ThSort field="familyName" table={goodRecordsTable}>Family Name</ThSort>
 				<ThSort field="email" table={goodRecordsTable}>Email</ThSort>
 				<ThSort field="affiliation" table={goodRecordsTable}>Affiliation</ThSort>
-				<ThSort field="country" table={goodRecordsTable}>Country</ThSort>
 				<ThSort field="comments" table={goodRecordsTable}>Comments</ThSort>
 			</tr>
 			<tr>
@@ -469,7 +453,6 @@
 				<ThFilter field="familyName" table={goodRecordsTable}></ThFilter>
 				<ThFilter field="email" table={goodRecordsTable}></ThFilter>
 				<ThFilter field="affiliation" table={goodRecordsTable}></ThFilter>
-				<ThFilter field="country" table={goodRecordsTable}></ThFilter>
 				<ThFilter field="comments" table={goodRecordsTable}></ThFilter>
 			</tr>
 			</thead>
@@ -487,7 +470,6 @@
 					<td>{row.familyName}</td>
 					<td>{row.email}</td>
 					<td>{row.affiliation}</td>
-					<td>{row.country}</td>
 					<td>{row.comments}</td>
 				</tr>
 			{/each}
@@ -501,8 +483,8 @@
 					<input id="outputCsvColumns2" type="text" bind:value={$goodOutputColumns}>
 				</div>
 				<button type="button"
-				        class:hidden={$goodOutputColumns === 'givenName,familyName,email,affiliation,country,comments'}
-				        onclick={() => $goodOutputColumns = 'givenName,familyName,email,affiliation,country,comments'}>Reset
+				        class:hidden={$goodOutputColumns === 'givenName,familyName,email,affiliation,comments'}
+				        onclick={() => $goodOutputColumns = 'givenName,familyName,email,affiliation,comments'}>Reset
 				</button>
 				<button type="button" style="cursor: pointer" class:hidden={goodRecordsTable.rowCount.total === 0}
 				        onclick={() => {
