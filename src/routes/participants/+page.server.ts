@@ -68,7 +68,7 @@ function likeOrNull(column: Column | SQL.Aliased | SQL, value: string) {
 		return not(like(column, `%${value}%`));
 	}
 	if (value === 'null' || value === 'none' || value === 'nil' || value === 'blank') {
-		return or(isNull(column), eq(column, ""));
+		return or(isNull(column), like(column, ""));
 	}
 	return like(column, `%${value}%`);
 }

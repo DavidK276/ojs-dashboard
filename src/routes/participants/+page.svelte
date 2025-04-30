@@ -18,7 +18,7 @@
 	import { mount } from "svelte";
 	import NoticeModal from "$lib/components/NoticeModal.svelte";
 	import { storable } from "$lib/storable";
-	import { type CsvRow, downloadCSV, isAffiliationValid, isUniversityEmail } from "./utils";
+	import { type CsvRow, downloadCSV, getRowColor, isAffiliationValid, isUniversityEmail } from "./utils";
 	import type { ActionResult } from "@sveltejs/kit";
 	import { invalidateAll } from "$app/navigation";
 	import ConfirmDeleteModal from "$lib/components/ConfirmDeleteModal.svelte";
@@ -279,7 +279,7 @@
 		</thead>
 		<tbody>
 		{#each table.rows as row, index (index)}
-			<tr>
+			<tr style="background: {getRowColor(row)}">
 				<td>
 					<div class="row ver-center" style="white-space: nowrap; gap: 0"><input style="margin-right: var(--xs)"
 					                                                                       type="checkbox"
@@ -397,7 +397,7 @@
 			</thead>
 			<tbody>
 			{#each badRecordsTable.rows as row, index (index)}
-				<tr style="background: #f44647">
+				<tr style="background: orange">
 					<td>
 						<div class="row ver-center" style="white-space: nowrap; gap: 0"><input style="margin-right: var(--xs)"
 						                                                                       type="checkbox"
