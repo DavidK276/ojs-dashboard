@@ -63,7 +63,7 @@ function likeOrNull(column: Column | SQL.Aliased | SQL, value: string) {
 	if (value.startsWith("!") || value.startsWith("~")) {
 		value = value.substring(1);
 		if (value === 'null' || value === 'none' || value === 'nil' || value === 'blank') {
-			return isNotNull(column);
+			return and(isNotNull(column), like(column, "%_%"));
 		}
 		return not(like(column, `%${value}%`));
 	}
