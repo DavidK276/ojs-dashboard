@@ -194,8 +194,6 @@ export const load: PageServerLoad = async ({ url }) => {
 					.where(and(eq(users.disabled, false), ...filters))
 	)[0];
 
-	console.log();
-
 	const emailsResult = await db.select({ email: users.email }).from(users).where(eq(users.disabled, false));
 	const emails: Set<string> = new Set();
 	emailsResult.forEach(row => emails.add(row.email));
