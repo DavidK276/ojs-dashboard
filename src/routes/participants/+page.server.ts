@@ -9,9 +9,11 @@ import {
 	eq,
 	getTableColumns,
 	inArray,
+	isNotNull,
 	isNull,
 	like,
 	not,
+	or,
 	type SQL,
 	sql
 } from "drizzle-orm";
@@ -58,8 +60,15 @@ const mostRecentAssignments = db.$with('mra').as(
 
 function likeOrNull(column: Column | SQL.Aliased | SQL, value: string) {
 	value = value.toLowerCase();
-	if (value === 'null' || value === 'none' || value === 'nil') {
-		return isNull(column);
+	if (value.startsWith("!") || value.startsWith("~")) {
+		value = value.substring(1);
+		if (value === 'null' || value === 'none' || value === 'nil' || value === 'blank') {
+			return isNotNull(column);
+		}
+		return not(like(column, `%${value}%`));
+	}
+	if (value === 'null' || value === 'none' || value === 'nil' || value === 'blank') {
+		return or(isNull(column), eq(column, ""));
 	}
 	return like(column, `%${value}%`);
 }
